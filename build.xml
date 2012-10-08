@@ -1,0 +1,36 @@
+<project name="indianpoker" default="package">
+
+	<path id="classpath.main">
+		<fileset dir="lib" includes="**/*" />
+		<path location="src/main/resources" />
+	</path>
+
+	<path id="classpath.test">
+		<path refid="classpath.main" />
+		<path location="target/classes/main" />
+	</path>
+
+	<target name="clean">
+		<delete dir="target" includeemptydirs="yes" failonerror="no" />
+		<delete dir="dist" includeemptydirs="yes" failonerror="no" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="target/classes/main" />
+		<javac srcdir="src/main/java" destdir="target/classes/main" debug="on" classpathref="classpath.main" />
+		<mkdir dir="target/classes/test" />
+		<javac srcdir="src/test/java" destdir="target/classes/test" debug="on" classpathref="classpath.test" />
+	</target>
+
+	<target name="package" depends="compile">
+		<mkdir dir="dist" />
+		<delete file="dist/pokerclient.jar" failonerror="false" />
+		<copy todir="dist">
+			<fileset dir="src/main/resources" includes="**/*" />
+		</copy>
+		<unjar dest="dist" src="lib/commons-codec-1.3.jar" />
+		<unjar dest="dist" src="lib/xmlrpc-2.0.jar" />
+		<jar destfile="dist/pokerclient.jar" basedir="target/classes/main" />
+	</target>
+
+</project>

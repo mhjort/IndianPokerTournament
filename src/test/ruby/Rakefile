@@ -1,0 +1,11 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+task :default => [ "test" ]
+
+task :test => [] do
+  Rake::TestTask.new do |t|
+    t.test_files = FileList['test*.rb']
+  end
+end
